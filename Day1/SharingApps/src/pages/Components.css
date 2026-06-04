@@ -1,0 +1,155 @@
+.components-container {
+  min-height: calc(100vh - 70px);
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.components-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.components-content h1 {
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.components-intro {
+  font-size: 1.05rem;
+  color: #4b5563;
+  margin-bottom: 32px;
+  line-height: 1.8;
+}
+
+.component-card {
+  margin-bottom: 28px;
+}
+
+.component-card .card-body {
+  padding: 24px;
+}
+
+.component-description {
+  margin: 0 0 20px 0;
+  color: #4b5563;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.demo-section {
+  margin-bottom: 24px;
+}
+
+.demo-section h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.code-block {
+  background: #1f2937;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.code-block pre {
+  margin: 0;
+}
+
+.code-block code {
+  color: #d1d5db;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.architecture-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 16px 0;
+  overflow-x: auto;
+}
+
+.architecture-box pre {
+  margin: 0;
+}
+
+.architecture-box code {
+  color: #4b5563;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.benefits-list li {
+  padding: 10px 0;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.best-practices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.practice-item {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.practice-item h4 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.practice-item p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .components-content h1 {
+    font-size: 2rem;
+  }
+
+  .demo-grid {
+    flex-direction: column;
+  }
+
+  .demo-grid button {
+    width: 100%;
+  }
+}

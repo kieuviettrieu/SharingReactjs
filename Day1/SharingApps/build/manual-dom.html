@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual DOM Example</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin-bottom: 16px;
+      font-size: 2rem;
+      color: #fbbf24;
+    }
+    p {
+      margin-bottom: 24px;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
+    .panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .box {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 20px;
+      padding: 22px;
+    }
+    .box h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #38bdf8;
+    }
+    .count-card {
+      background: rgba(30, 41, 59, 0.95);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .count-label {
+      font-weight: 700;
+      opacity: 0.85;
+    }
+    .count-value {
+      margin-top: 12px;
+      font-size: 2.4rem;
+      color: #fbbf24;
+      font-weight: 700;
+    }
+    .status {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(241, 245, 249, 0.08);
+      color: #f8fafc;
+      line-height: 1.6;
+    }
+    .list-box {
+      margin-bottom: 18px;
+    }
+    .list-box h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #fcd34d;
+    }
+    .manual-list {
+      list-style: disc inside;
+      margin: 0;
+      padding: 0;
+      color: #e2e8f0;
+    }
+    .manual-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+    .buttons {
+      display: grid;
+      gap: 12px;
+    }
+    .btn {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-primary {
+      background: #3b82f6;
+      color: white;
+    }
+    .btn-warning {
+      background: #f97316;
+      color: white;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: #f8fafc;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .log-box {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 16px;
+      padding: 18px;
+      max-height: 310px;
+      overflow-y: auto;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    .log-line {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      border-left: 4px solid rgba(129, 140, 248, 0.7);
+      padding-left: 12px;
+    }
+    .code-block {
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      margin-top: 18px;
+      overflow-x: auto;
+    }
+    .code-block code {
+      font-family: 'Courier New', monospace;
+      color: #e2e8f0;
+      line-height: 1.6;
+      display: block;
+      white-space: pre-wrap;
+    }
+    @media (max-width: 900px) {
+      .panel {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Manual DOM bằng HTML + JS thuần</h1>
+    <p>Đây là ví dụ HTML thực tế để so sánh với React. Phần này cập nhật DOM thủ công bằng JavaScript, nên rất dễ miss case nếu bạn quên cập nhật một phần tử.</p>
+
+    <div class="panel">
+      <div class="box">
+        <h2>Manual HTML</h2>
+        <div class="count-card">
+          <div class="count-label">Giá trị manual count:</div>
+          <div id="manual-count" class="count-value">0</div>
+          <div id="manual-status" class="status">Manual DOM đang đồng bộ với count = 0</div>
+        </div>
+
+        <div class="list-box">
+          <h3>Manual Items</h3>
+          <ul id="manual-list" class="manual-list"></ul>
+        </div>
+
+        <div class="buttons">
+          <button id="manual-update" class="btn btn-warning">Cập nhật Manual (Miss Case)</button>
+          <button id="manual-fix" class="btn btn-primary">Cập nhật Manual đầy đủ</button>
+          <button id="manual-reset" class="btn btn-secondary">Reset Manual</button>
+        </div>
+      </div>
+
+      <div class="box">
+        <h2>Nhật ký và giải thích</h2>
+        <div id="manual-log" class="log-box"></div>
+        <div class="code-block">
+          <code>const countEl = document.getElementById('manual-count');
+const listEl = document.getElementById('manual-list');
+
+function updateCount(count) {
+  countEl.textContent = count;
+}
+
+function updateItems(count) {
+  listEl.innerHTML = '';
+  ['A', 'B', 'C'].forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = `Item ${item} (${count})`;
+    listEl.appendChild(li);
+  });
+}
+
+// Nếu quên update status, UI dễ bị lệch
+default function handleManualUpdate() {
+  updateCount(newCount);
+  updateItems(newCount);
+}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const manualCountEl = document.getElementById('manual-count');
+    const manualStatusEl = document.getElementById('manual-status');
+    const manualListEl = document.getElementById('manual-list');
+    const manualLogEl = document.getElementById('manual-log');
+
+    let manualCount = 0;
+
+    const addLog = (message) => {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.textContent = `${new Date().toLocaleTimeString('vi-VN')} - ${message}`;
+      manualLogEl.prepend(line);
+    };
+
+    const renderManual = (mode) => {
+      manualCountEl.textContent = manualCount;
+      manualListEl.innerHTML = '';
+      ['A', 'B', 'C'].forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = `Item ${item} (${manualCount})`;
+        manualListEl.appendChild(li);
+      });
+      manualStatusEl.textContent = mode === 'missed'
+        ? '⚠️ Manual update bị miss case khi render status'
+        : `Manual DOM đang đồng bộ với count = ${manualCount}`;
+    };
+
+    document.getElementById('manual-update').addEventListener('click', () => {
+      manualCount += 1;
+      manualCountEl.textContent = manualCount;
+      //update manual count
+      manualListEl.innerHTML = '';
+      //update manual list
+      ['A', 'B', 'C'].forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = `Item ${item} (${manualCount})`;
+        manualListEl.appendChild(li);
+      });
+    //   manualStatusEl.textContent = `Manual DOM đang đồng bộ với count = ${manualCount}`;
+      addLog('Cập nhật count và items, nhưng bỏ qua status');
+    });
+
+    document.getElementById('manual-fix').addEventListener('click', () => {
+      manualCount += 1;
+      renderManual('fixed');
+      addLog('Cập nhật full manual DOM, đồng bộ count/status/items');
+    });
+
+    document.getElementById('manual-reset').addEventListener('click', () => {
+      manualCount = 0;
+      renderManual('initial');
+      addLog('Reset manual DOM về 0');
+    });
+
+    renderManual('initial');
+    addLog('Manual DOM page loaded');
+  </script>
+</body>
+</html>

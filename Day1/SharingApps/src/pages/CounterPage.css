@@ -1,0 +1,83 @@
+.counter-page-container {
+  min-height: calc(100vh - 70px);
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.counter-page-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.counter-page-content h1 {
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+  color: #0c4a6e;
+}
+
+.page-intro {
+  font-size: 1rem;
+  color: #0c7a9e;
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+.counter-wrapper {
+  margin-bottom: 32px;
+}
+
+.learning-card {
+  margin-top: 24px;
+}
+
+.learning-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: #f0f9ff;
+  border-radius: 10px;
+  border-left: 4px solid #0284c7;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #0284c7;
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step h3 {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #0c4a6e;
+}
+
+.step p {
+  margin: 0;
+  color: #0c7a9e;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .counter-page-content h1 {
+    font-size: 2rem;
+  }
+
+  .learning-steps {
+    grid-template-columns: 1fr;
+  }
+}
