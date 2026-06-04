@@ -25,6 +25,7 @@ Sau buổi học, bạn sẽ hiểu:
 2. [React giải quyết vấn đề gì?](#2-react-giải-quyết-vấn-đề-gì)
 3. [Component là gì?](#3-component-là-gì)
 4. [Function Component là gì?](#4-function-component-là-gì)
+   - [Class Component là gì?](#class-component-là-gì)
 5. [Hooks là gì?](#-hooks-là-gì)
 6. [State là gì?](#5-state-là-gì)
 7. [Vì sao UI tự động update?](#6-vì-sao-ui-tự-động-update)
@@ -98,7 +99,7 @@ Trong React có **2 cách viết component**:
 
 ---
 
-## 4. Function Component là gì?
+## 4. Function Component/Class Component là gì?
 
 ```jsx
 function Header() {
@@ -115,6 +116,79 @@ function Header() {
 
 Hiện nay hầu hết các dự án React mới đều sử dụng:
 **Function Component + Hooks**
+
+---
+
+### Class Component là gì?
+
+Trước khi Hooks ra đời (React < 16.8), React sử dụng **Class Component** để quản lý state và lifecycle.
+
+```jsx
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  increment = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>{this.state.count}</h1>
+        <button onClick={this.increment}>Tăng</button>
+      </div>
+    );
+  }
+}
+```
+
+Đặc điểm của Class Component:
+- Là một **ES6 Class** kế thừa từ `React.Component`
+- State được quản lý qua `this.state` và cập nhật bằng `this.setState()`
+- Có **Lifecycle Methods** để xử lý các giai đoạn của component
+
+---
+
+#### 🔁 Lifecycle của Class Component
+
+Lifecycle chia thành 3 giai đoạn chính:
+
+**1. Mounting — Component được tạo và đưa vào DOM**
+
+| Phương thức | Mô tả |
+| ----------- | ----- |
+| `constructor()` | Khởi tạo state và bind event handlers |
+| `render()` | Trả về JSX để React vẽ UI |
+| `componentDidMount()` | Chạy sau khi component đã vào DOM — dùng để call API, set up subscriptions |
+
+**2. Updating — Component re-render khi props hoặc state thay đổi**
+
+| Phương thức | Mô tả |
+| ----------- | ----- |
+| `render()` | Chạy lại để tạo UI mới |
+| `componentDidUpdate(prevProps, prevState)` | Chạy sau re-render — dùng để xử lý side effects khi dữ liệu thay đổi |
+
+**3. Unmounting — Component bị xóa khỏi DOM**
+
+| Phương thức | Mô tả |
+| ----------- | ----- |
+| `componentWillUnmount()` | Chạy trước khi component bị xóa — dùng để dọn dẹp: hủy timer, unsubscribe |
+
+```text
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  Mounting   │ ──▶ │  Updating   │ ──▶ │ Unmounting  │
+└─────────────┘     └─────────────┘     └─────────────┘
+  constructor()       render()            componentWillUnmount()
+  render()            componentDidUpdate()
+  componentDidMount()
+```
+
+> ➡️ **Ngày nay**, Function Component + Hooks đã thay thế hoàn toàn Class Component vì code ngắn gọn và dễ tái sử dụng logic hơn. Tuy nhiên, bạn vẫn có thể gặp Class Component trong các codebase cũ.
 
 ---
 
